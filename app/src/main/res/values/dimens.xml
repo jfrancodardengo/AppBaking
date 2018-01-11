@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_left">16dp</dimen>
+    <dimen name="margin_right">16dp</dimen>
+    <dimen name="padding_bottom_title">16dp</dimen>
+    <dimen name="text_size_title">24sp</dimen>
+    <dimen name="height_line">1dp</dimen>
+    <dimen name="padding_button">8dp</dimen>
+    <dimen name="layout_margin">16dp</dimen>
+    <dimen name="padding_top_title">16dp</dimen>
+    <dimen name="text_size_button">14sp</dimen>
+    <dimen name="text_size_no_internet">40sp</dimen>
+    <dimen name="margin_left_recycler_recipe">20dp</dimen>
+</resources>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AppBaking</string>
+    <string name="action_detail">detalhes</string>
+    <string name="label_servings">Serve</string>
+    <string name="n_o_existe_conex_o_com_internet">Não existe conexão com internet</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
