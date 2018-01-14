@@ -19,7 +19,7 @@ public class StepsModel implements Parcelable {
             return new StepsModel[size];
         }
     };
-    private int mIdStep;
+    private Integer mIdStep;
     private String mShortDescription;
     private String mDescription;
     private String mVideoUrl;
@@ -44,11 +44,11 @@ public class StepsModel implements Parcelable {
         mThumbnailUrl = in.readString();
     }
 
-    public int getIdStep() {
+    public Integer getIdStep() {
         return mIdStep;
     }
 
-    public void setIdStep(int mIdStep) {
+    public void setIdStep(Integer mIdStep) {
         this.mIdStep = mIdStep;
     }
 

@@ -2,6 +2,8 @@ package com.example.guto.appbaking.fragments;
 
 
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +17,7 @@ import com.example.guto.appbaking.model.RecipeModel;
 import com.example.guto.appbaking.model.StepsModel;
 import com.example.guto.appbaking.ui.DetailActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,6 +27,9 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  */
 public class StepFragment extends Fragment {
+    public static final String STEP_PARCELABLE = "parcelableStep";
+    public static final String STEP_POSITION = "selectedStepPosition";
+
     @BindView(R.id.stepRecycler)
     RecyclerView stepRecycler;
     private DetailActivity detailActivity;
@@ -51,7 +57,19 @@ public class StepFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getContext());
         stepRecycler.setLayoutManager(linearLayoutManager);
         stepsModels = recipeModel.getSteps();
-        stepRecycler.setAdapter(new StepAdapter(getContext(),stepsModels));
+
+        stepRecycler.setAdapter(new StepAdapter(getActivity(), stepsModels, new StepAdapter.DialogFragmentListener() {
+            @Override
+            public void onStepItemClicked(int selectedPosition, List<StepsModel> stepList) {
+                StepDetailFragment stepDetailFragment = new StepDetailFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt(STEP_POSITION,selectedPosition);
+                bundle.putParcelableArrayList(STEP_PARCELABLE, (ArrayList<? extends Parcelable>) stepList);
+                stepDetailFragment.setArguments(bundle);
+                stepDetailFragment.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.Theme_AppCompat_DayNight_Dialog_Alert);
+                stepDetailFragment.show(getFragmentManager(),"Step Detail Dialog");
+            }
+        }));
         return rootView;
     }
 

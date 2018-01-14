@@ -17,7 +17,6 @@ import com.example.guto.appbaking.utils.ConnectService;
 import com.example.guto.appbaking.utils.JsonService;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

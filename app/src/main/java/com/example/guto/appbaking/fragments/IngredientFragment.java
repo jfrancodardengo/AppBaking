@@ -16,7 +16,6 @@ import com.example.guto.appbaking.model.IngredientsModel;
 import com.example.guto.appbaking.model.RecipeModel;
 import com.example.guto.appbaking.ui.DetailActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

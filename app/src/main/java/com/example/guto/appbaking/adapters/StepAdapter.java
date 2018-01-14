@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.guto.appbaking.R;
 import com.example.guto.appbaking.model.StepsModel;
@@ -21,12 +20,14 @@ import butterknife.ButterKnife;
  */
 
 public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder> {
-    Context context;
-    List<StepsModel> stepsModels;
+    private Context context;
+    private List<StepsModel> stepsModels;
+    private DialogFragmentListener dialogFragmentListener;
 
-    public StepAdapter(Context context, List<StepsModel> stepsModels) {
+    public StepAdapter(Context context, List<StepsModel> stepsModels,DialogFragmentListener dialogFragmentListener) {
         this.context = context;
         this.stepsModels = stepsModels;
+        this.dialogFragmentListener = dialogFragmentListener;
     }
 
     @Override
@@ -46,22 +47,26 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
         return stepsModels.size();
     }
 
-    public class StepViewHolder extends RecyclerView.ViewHolder {
+    class StepViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.text_idStep)
         TextView textIdStep;
         @BindView(R.id.text_shortDescription)
         TextView textShortDescription;
 
-        public StepViewHolder(View itemView) {
+        StepViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context,"Foi clicado aqui no passo " + getAdapterPosition(),Toast.LENGTH_SHORT).show();
+                    dialogFragmentListener.onStepItemClicked(getAdapterPosition(),stepsModels);
                 }
             });
         }
+    }
+
+    public interface DialogFragmentListener{
+        void onStepItemClicked(int selectedPosition,List<StepsModel> stepList);
     }
 }

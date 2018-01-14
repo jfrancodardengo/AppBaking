@@ -23,7 +23,8 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
-                tools:src="@drawable/nutella_pie" />
+                tools:src="@drawable/nutella_pie"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/text_recipe_name"
