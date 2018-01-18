@@ -2,6 +2,8 @@ package com.example.guto.appbaking.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.guto.appbaking.IngredientsWidgetService;
 import com.example.guto.appbaking.R;
 import com.example.guto.appbaking.model.RecipeModel;
 import com.example.guto.appbaking.ui.DetailActivity;
@@ -29,6 +32,8 @@ import butterknife.ButterKnife;
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeListViewHolder> {
     //constante que vai armazenar o parcelable da intenet
     public static final String RECIPE_PARCELABLE = "recipe_parcelable";
+    public static final String RECIPE_ID = "recipe_id";
+    public static final String RECIPE_NAME = "recipe_name";
 
     private Context context;
     private List<RecipeModel> recipeModels;
@@ -92,6 +97,17 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             buttonAction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(context);
+                    SharedPreferences.Editor editor = s.edit();
+                    editor.putInt(RECIPE_ID,getAdapterPosition());
+                    editor.putString(RECIPE_NAME,recipeModels.get(getAdapterPosition()).getName());
+                    editor.apply();
+
+                    Intent newI = new Intent(context, IngredientsWidgetService.class);
+                    newI.setAction(IngredientsWidgetService.ACTION_SEE_INGREDIENTS);
+                    context.startService(newI);
+
                     if(getAdapterPosition() != RecyclerView.NO_POSITION){
                         RecipeModel recipeModel = recipeModels.get(getAdapterPosition());
                         Intent intent = new Intent(context,DetailActivity.class);

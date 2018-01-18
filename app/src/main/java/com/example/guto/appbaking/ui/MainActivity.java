@@ -1,7 +1,9 @@
 package com.example.guto.appbaking.ui;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +25,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String WHOLE_RESPONSE = "whole_response";
+
     @BindView(R.id.recipeListRecycler)
     RecyclerView recipeRecyclerView;
     @BindView(R.id.noInternet)
@@ -35,11 +39,17 @@ public class MainActivity extends AppCompatActivity {
     List<RecipeModel> recipeModelList;
     //representa a diposição dos dados no telefone
     LinearLayoutManager linearLayoutManager;
+    SharedPreferences.Editor editor;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = sharedPreferences.edit();
+
         ButterKnife.bind(this);
         if(ConnectService.isConnected(this)){
             new FetchRecipes().execute();
@@ -58,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(String... strings) {
             try {
                 jsonResponse = connectService.run(JsonService.JSON_URL);
+
+                editor.putString(WHOLE_RESPONSE,jsonResponse);
+                editor.apply();
+
                 recipeModelList = JsonService.getJsonRecipe(jsonResponse);
                 Log.i("RESPOSTA: ",jsonResponse);
             } catch (IOException e) {
