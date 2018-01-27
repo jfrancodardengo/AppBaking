@@ -1,4 +1,4 @@
-package com.example.guto.appbaking;
+package com.example.guto.appbaking.widget;
 
 import android.app.IntentService;
 import android.appwidget.AppWidgetManager;
@@ -16,7 +16,7 @@ import com.example.guto.appbaking.adapters.RecipeListAdapter;
  * Created by GUTO on 17/01/2018.
  */
 
-public class IngredientsWidgetService extends IntentService{
+public class IngredientsWidgetService extends IntentService {
     public static final String ACTION_SEE_INGREDIENTS =
             "com.example.android.mygarden.action.see_ingredients";
 
@@ -36,18 +36,19 @@ public class IngredientsWidgetService extends IntentService{
 
         int sample;
 
-        if(intent != null){
+        if (intent != null) {
             final String action = intent.getAction();
 
-            if(action.equals(ACTION_SEE_INGREDIENTS)){
+            if (action.equals(ACTION_SEE_INGREDIENTS)) {
                 try {
-                    sample = s.getInt(RecipeListAdapter.RECIPE_ID,-1);
-                    Log.d("Check Service","Running");
+                    sample = s.getInt(RecipeListAdapter.RECIPE_ID, -1);
+                    Log.d("Check Service", "Running");
                     AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
                     int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, BakingWidget.class));
                     //Now update all widgets
                     BakingWidget.updateBakingWidgets(this, appWidgetManager, sample, appWidgetIds);
-                }catch (Exception e){}
+                } catch (Exception e) {
+                }
             }
         }
     }

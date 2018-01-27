@@ -21,7 +21,7 @@ import java.util.List;
  * Created by GUTO on 28/12/2017.
  */
 
-public class JsonService{
+public class JsonService {
     public static final String JSON_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
     public JsonService() {
@@ -29,10 +29,10 @@ public class JsonService{
 
     public static List<RecipeModel> getJsonRecipe(String jsonData) {
         List<RecipeModel> recipeModels = new ArrayList<>();
-        List<IngredientsModel> ingredientsModels = null;
-        List<StepsModel> stepsModels = null;
+        List<IngredientsModel> ingredientsModels;
+        List<StepsModel> stepsModels;
 
-        if(jsonData == null || jsonData.isEmpty()) return null;
+        if (jsonData == null || jsonData.isEmpty()) return null;
 
         try {
             JSONArray baseArray = new JSONArray(jsonData);
@@ -51,7 +51,7 @@ public class JsonService{
                     String measure = current.getString("measure");
                     String ingredient = current.getString("ingredient");
 
-                    ingredientsModels.add(new IngredientsModel(quantity,measure,ingredient));
+                    ingredientsModels.add(new IngredientsModel(quantity, measure, ingredient));
                 }
 
                 JSONArray jsonArraySteps = jsonObject.getJSONArray("steps");
@@ -63,13 +63,13 @@ public class JsonService{
                     String videoUrl = current.getString("videoURL");
                     String thumbnailUrl = current.getString("thumbnailURL");
 
-                    stepsModels.add(new StepsModel(idStep,shortDescription,description,videoUrl,thumbnailUrl));
+                    stepsModels.add(new StepsModel(idStep, shortDescription, description, videoUrl, thumbnailUrl));
                 }
 
                 int servings = jsonObject.getInt("servings");
                 String image = jsonObject.getString("image");
 
-                recipeModels.add(new RecipeModel(idRecipe,nameRecipe,ingredientsModels,stepsModels,servings,image));
+                recipeModels.add(new RecipeModel(idRecipe, nameRecipe, ingredientsModels, stepsModels, servings, image));
             }
 
         } catch (JSONException e) {

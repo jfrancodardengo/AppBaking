@@ -1,5 +1,4 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,44 +7,43 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_margin="@dimen/layout_margin"
         android:background="@android:color/white"
-        android:layout_margin="@dimen/layout_margin">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/text_detail_recipe_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            tools:text="Nome da receita"
+            android:textAlignment="center"
             android:textSize="@dimen/text_size_title"
-            android:textAlignment="center"/>
+            android:textStyle="bold"
+            tools:text="Nome da receita" />
 
         <ImageView
             android:id="@+id/image_detail_step"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:visibility="gone"
             android:background="@drawable/no_image_available"
-            android:contentDescription="@string/background_recipe" />
+            android:contentDescription="@string/background_recipe"
+            android:scaleType="centerInside"
+            android:visibility="gone" />
 
         <com.google.android.exoplayer2.ui.SimpleExoPlayerView
             android:id="@+id/playerView"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp" />
 
         <TextView
-            android:id="@+id/label_detail_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:paddingTop="@dimen/padding_bottom_title"
-            android:textSize="16sp"
+            android:text="@string/label_description"
             android:textAllCaps="true"
-            android:text="@string/label_description" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/text_detail_step_desc"
@@ -57,8 +55,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="@dimen/layout_margin">
+            android:layout_margin="@dimen/layout_margin"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/button_previous"
@@ -66,7 +64,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:text="@string/button_previous"/>
+                style="?android:attr/buttonBarButtonStyle"
+                android:text="@string/button_previous" />
 
             <Button
                 android:id="@+id/button_next"
@@ -74,7 +73,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
-                android:text="@string/button_next"/>
+                style="?android:attr/buttonBarButtonStyle"
+                android:text="@string/button_next" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

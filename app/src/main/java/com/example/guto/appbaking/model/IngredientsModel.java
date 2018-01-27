@@ -32,7 +32,7 @@ public class IngredientsModel implements Parcelable {
         this.mIngredient = mIngredient;
     }
 
-    protected IngredientsModel(Parcel in) {
+    private IngredientsModel(Parcel in) {
         mQuantity = in.readInt();
         mMeasure = in.readString();
         mIngredient = in.readString();

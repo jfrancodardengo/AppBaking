@@ -3,12 +3,11 @@ package com.example.guto.appbaking.ui;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -28,37 +27,32 @@ public class MainActivity extends AppCompatActivity {
     public static final String WHOLE_RESPONSE = "whole_response";
 
     @BindView(R.id.recipeListRecycler)
-    RecyclerView recipeRecyclerView;
+    public RecyclerView recipeRecyclerView;
     @BindView(R.id.noInternet)
-    TextView noInternet;
-    RecipeListAdapter recipeListAdapter;
-    String jsonResponse;
-    Context context;
-    ConnectService connectService = new ConnectService();;
-    //lista das receitas
-    List<RecipeModel> recipeModelList;
-    //representa a diposição dos dados no telefone
-    LinearLayoutManager linearLayoutManager;
-    SharedPreferences.Editor editor;
-    SharedPreferences sharedPreferences;
+    public TextView noInternet;
+    private Context context;
+    private final ConnectService connectService = new ConnectService();
+    private List<RecipeModel> recipeModelList;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = sharedPreferences.edit();
+        editor.apply();
 
         ButterKnife.bind(this);
-        if(ConnectService.isConnected(this)){
+        if (ConnectService.isConnected(this)) {
             new FetchRecipes().execute();
             noInternet.setVisibility(View.GONE);
-        }else{
+        } else {
             noInternet.setVisibility(View.VISIBLE);
         }
         recipeRecyclerView.setHasFixedSize(true);
-        linearLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recipeRecyclerView.setLayoutManager(linearLayoutManager);
     }
 
@@ -67,13 +61,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(String... strings) {
             try {
-                jsonResponse = connectService.run(JsonService.JSON_URL);
+                String jsonResponse = connectService.run();
 
-                editor.putString(WHOLE_RESPONSE,jsonResponse);
+                editor.putString(WHOLE_RESPONSE, jsonResponse);
                 editor.apply();
 
                 recipeModelList = JsonService.getJsonRecipe(jsonResponse);
-                Log.i("RESPOSTA: ",jsonResponse);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -83,12 +76,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void avoid) {
             super.onPostExecute(avoid);
-            if(recipeModelList==null){
+            if (recipeModelList == null) {
                 noInternet.setVisibility(View.VISIBLE);
                 noInternet.setText("Erro ao baixar os dados");
-            }else{
-//                recipeModelList = new ArrayList<>();
-                recipeListAdapter = new RecipeListAdapter(context,recipeModelList);
+            } else {
+                RecipeListAdapter recipeListAdapter = new RecipeListAdapter(context, recipeModelList);
                 recipeRecyclerView.setAdapter(recipeListAdapter);
             }
         }

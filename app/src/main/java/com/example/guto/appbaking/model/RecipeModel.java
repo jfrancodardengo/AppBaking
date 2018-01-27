@@ -40,7 +40,7 @@ public class RecipeModel implements Parcelable {
         this.mImage = mImage;
     }
 
-    protected RecipeModel(Parcel in) {
+    private RecipeModel(Parcel in) {
         mIdRecipe = in.readInt();
         mNameRecipe = in.readString();
         mIngredients = in.createTypedArrayList(IngredientsModel.CREATOR);

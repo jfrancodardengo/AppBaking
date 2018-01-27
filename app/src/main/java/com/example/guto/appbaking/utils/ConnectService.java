@@ -6,7 +6,6 @@ import android.net.NetworkInfo;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import okhttp3.OkHttpClient;
@@ -18,17 +17,7 @@ import okhttp3.Response;
  */
 
 public class ConnectService {
-    OkHttpClient client = new OkHttpClient();
-
-    public String run(String url) throws IOException {
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-
-        try (Response response = client.newCall(request).execute()) {
-            return response.body().string();
-        }
-    }
+    private final OkHttpClient client = new OkHttpClient();
 
     public static Object connect(String jsonURL) {
         try {
@@ -40,9 +29,6 @@ public class ConnectService {
             con.setReadTimeout(15000);
             con.setDoInput(true);
             return con;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return "Error " + e.getMessage();
         } catch (IOException e) {
             e.printStackTrace();
             return "Error " + e.getMessage();
@@ -53,5 +39,15 @@ public class ConnectService {
         ConnectivityManager cm = (ConnectivityManager) context.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return (netInfo != null) && (netInfo.isConnectedOrConnecting()) && (netInfo.isAvailable());
+    }
+
+    public String run() throws IOException {
+        Request request = new Request.Builder()
+                .url(JsonService.JSON_URL)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        }
     }
 }

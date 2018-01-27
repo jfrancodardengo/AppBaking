@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.example.guto.appbaking.R;
 import com.example.guto.appbaking.model.IngredientsModel;
+
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -17,8 +20,7 @@ import butterknife.ButterKnife;
  */
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder> {
-    private Context context;
-    List<IngredientsModel> ingredientsModels;
+    private final List<IngredientsModel> ingredientsModels;
 
     public IngredientAdapter(List<IngredientsModel> ingredientsModels) {
         this.ingredientsModels = ingredientsModels;
@@ -26,8 +28,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
     @Override
     public IngredientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        context = parent.getContext();
-        return new IngredientViewHolder(LayoutInflater.from(context).inflate(R.layout.ingredient_list_item,parent,false));
+        Context context = parent.getContext();
+        return new IngredientViewHolder(LayoutInflater.from(context).inflate(R.layout.ingredient_list_item, parent, false));
     }
 
     @Override
@@ -52,7 +54,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
         public IngredientViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

@@ -2,7 +2,6 @@ package com.example.guto.appbaking.fragments;
 
 
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,12 +22,7 @@ import butterknife.ButterKnife;
 
 public class IngredientFragment extends Fragment {
     @BindView(R.id.ingredientRecycler)
-    RecyclerView ingredientRecycler;
-    private DetailActivity detailActivity;
-    View rootView;
-    LinearLayoutManager linearLayoutManager;
-    RecipeModel recipeModel;
-    List<IngredientsModel> ingredientsModels;
+    public RecyclerView ingredientRecycler;
 
     public IngredientFragment() {
         // Required empty public constructor
@@ -44,14 +38,14 @@ public class IngredientFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_ingredient, container, false);
-        ButterKnife.bind(this,rootView);
-        detailActivity = (DetailActivity) getActivity();
-        recipeModel = detailActivity.getRecipeParcelable();
-        linearLayoutManager = new LinearLayoutManager(getContext());
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_ingredient, container, false);
+        ButterKnife.bind(this, rootView);
+        DetailActivity detailActivity = (DetailActivity) getActivity();
+        RecipeModel recipeModel = detailActivity.getRecipeParcelable();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ingredientRecycler.setLayoutManager(linearLayoutManager);
-        ingredientsModels = recipeModel.getIngredients();
+        List<IngredientsModel> ingredientsModels = recipeModel.getIngredients();
         ingredientRecycler.setAdapter(new IngredientAdapter(ingredientsModels));
         return rootView;
     }

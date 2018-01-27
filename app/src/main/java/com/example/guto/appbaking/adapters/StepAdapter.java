@@ -21,10 +21,10 @@ import butterknife.ButterKnife;
 
 public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder> {
     private Context context;
-    private List<StepsModel> stepsModels;
-    private DialogFragmentListener dialogFragmentListener;
+    private final List<StepsModel> stepsModels;
+    private final DialogFragmentListener dialogFragmentListener;
 
-    public StepAdapter(Context context, List<StepsModel> stepsModels,DialogFragmentListener dialogFragmentListener) {
+    public StepAdapter(Context context, List<StepsModel> stepsModels, DialogFragmentListener dialogFragmentListener) {
         this.context = context;
         this.stepsModels = stepsModels;
         this.dialogFragmentListener = dialogFragmentListener;
@@ -33,7 +33,7 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
     @Override
     public StepViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
-        return new StepViewHolder(LayoutInflater.from(context).inflate(R.layout.step_list_item,parent,false));
+        return new StepViewHolder(LayoutInflater.from(context).inflate(R.layout.step_list_item, parent, false));
     }
 
     @Override
@@ -47,6 +47,10 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
         return stepsModels.size();
     }
 
+    public interface DialogFragmentListener {
+        void onStepItemClicked(int selectedPosition, List<StepsModel> stepList);
+    }
+
     class StepViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.text_idStep)
         TextView textIdStep;
@@ -55,18 +59,14 @@ public class StepAdapter extends RecyclerView.Adapter<StepAdapter.StepViewHolder
 
         StepViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    dialogFragmentListener.onStepItemClicked(getAdapterPosition(),stepsModels);
+                    dialogFragmentListener.onStepItemClicked(getAdapterPosition(), stepsModels);
                 }
             });
         }
-    }
-
-    public interface DialogFragmentListener{
-        void onStepItemClicked(int selectedPosition,List<StepsModel> stepList);
     }
 }

@@ -5,11 +5,10 @@
     <string name="n_o_existe_conex_o_com_internet">Não existe conexão com internet</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="background_recipe">background_recipe</string>
     <string name="label_description">descrição</string>
     <string name="button_previous">Anterior</string>
     <string name="button_next">Próximo</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+    <string name="no_recipes_selected">No Recipes Selected</string>
+    <string name="image_recipe">Image recipe</string>
 </resources>

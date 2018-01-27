@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.guto.appbaking.IngredientsWidgetService;
+import com.example.guto.appbaking.widget.IngredientsWidgetService;
 import com.example.guto.appbaking.R;
 import com.example.guto.appbaking.model.RecipeModel;
 import com.example.guto.appbaking.ui.DetailActivity;
@@ -30,16 +30,18 @@ import butterknife.ButterKnife;
  */
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeListViewHolder> {
-    //constante que vai armazenar o parcelable da intenet
     public static final String RECIPE_PARCELABLE = "recipe_parcelable";
     public static final String RECIPE_ID = "recipe_id";
     public static final String RECIPE_NAME = "recipe_name";
-
-    private Context context;
-    private List<RecipeModel> recipeModels;
-    //armazena as imagens
-    private List<Integer> mRecipeDrawables = imagesCardView();
     private static final String TAG = RecipeListAdapter.class.getSimpleName();
+    private Context context;
+    private final List<RecipeModel> recipeModels;
+    private List<Integer> mRecipeDrawables = imagesCardView();
+
+    public RecipeListAdapter(Context context, List<RecipeModel> recipeModelList) {
+        this.context = context;
+        this.recipeModels = recipeModelList;
+    }
 
     private List<Integer> imagesCardView() {
         mRecipeDrawables = new ArrayList<>();
@@ -50,15 +52,10 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         return mRecipeDrawables;
     }
 
-    public RecipeListAdapter(Context context,List<RecipeModel> recipeModelList) {
-        this.context = context;
-        this.recipeModels = recipeModelList;
-    }
-
     @Override
     public RecipeListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
-        View rootView = LayoutInflater.from(context).inflate(R.layout.recipe_list_item,parent,false);
+        View rootView = LayoutInflater.from(context).inflate(R.layout.recipe_list_item, parent, false);
         return new RecipeListViewHolder(rootView);
     }
 
@@ -92,7 +89,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
         public RecipeListViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
 
             buttonAction.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -100,20 +97,20 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
                     SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(context);
                     SharedPreferences.Editor editor = s.edit();
-                    editor.putInt(RECIPE_ID,getAdapterPosition());
-                    editor.putString(RECIPE_NAME,recipeModels.get(getAdapterPosition()).getName());
+                    editor.putInt(RECIPE_ID, getAdapterPosition());
+                    editor.putString(RECIPE_NAME, recipeModels.get(getAdapterPosition()).getName());
                     editor.apply();
 
                     Intent newI = new Intent(context, IngredientsWidgetService.class);
                     newI.setAction(IngredientsWidgetService.ACTION_SEE_INGREDIENTS);
                     context.startService(newI);
 
-                    if(getAdapterPosition() != RecyclerView.NO_POSITION){
+                    if (getAdapterPosition() != RecyclerView.NO_POSITION) {
                         RecipeModel recipeModel = recipeModels.get(getAdapterPosition());
-                        Intent intent = new Intent(context,DetailActivity.class);
-                        intent.putExtra(RECIPE_PARCELABLE,recipeModel);
+                        Intent intent = new Intent(context, DetailActivity.class);
+                        intent.putExtra(RECIPE_PARCELABLE, recipeModel);
                         context.startActivity(intent);
-                        Log.v(TAG,"Posição selecionada: " + recipeModel);
+                        Log.v(TAG, "Posição selecionada: " + recipeModel);
                     }
                 }
             });
