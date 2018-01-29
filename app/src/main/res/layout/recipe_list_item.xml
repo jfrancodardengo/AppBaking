@@ -13,6 +13,7 @@
         app:cardCornerRadius="@dimen/cardview_default_radius">
 
         <RelativeLayout
+            android:id="@+id/relativeRecipeList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -47,12 +48,14 @@
                 android:background="@android:color/darker_gray" />
 
             <LinearLayout
+                android:id="@+id/linearDescriptionRecipe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text_recipe_name"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/linearServeRecipe"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">

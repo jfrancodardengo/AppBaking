@@ -1,10 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeDetailStep"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="com.example.guto.appbaking.fragments.StepDetailFragment">
 
     <LinearLayout
+        android:id="@+id/linearDetailStep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/layout_margin"
@@ -53,6 +55,7 @@
             tools:text="Desc" />
 
         <LinearLayout
+            android:id="@+id/linearButtonsDetailSte"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/layout_margin"
